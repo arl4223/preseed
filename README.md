@@ -12,11 +12,15 @@ ATTENTION: the included preseed file will delete all content on /dev/sda on the 
 
 Download the bash-script and make it executable.
 
-		<code>chmod +x gen-preseed-iso.sh</code>
+		chmod +x gen-preseed-iso.sh
 	
-Run the script with root rights (as user root or sudo).
+Run the script with root rights.
+
+As root
 
 	# ./gen-preseed-iso.sh
+	
+or with sudo
 	
 	$ sudo ./gen-preseed-iso.sh
 
