@@ -1,14 +1,14 @@
 #!/bin/bash
 
 # Variables
-TEMP_DIR = /tmp
-LOOP_DIR = loopdir
-INITRD_DIR = initdir
-EXPORT_DIR = exportdir
-PRESEED_URL = 
-PRESEED_FILE = preseed.cfg
-DEBIAN_VERSION = 8.2.0
-PACKAGES = rsync xorriso
+TEMP_DIR=/tmp
+LOOP_DIR=loopdir
+INITRD_DIR=initdir
+EXPORT_DIR=exportdir
+PRESEED_URL= 
+PRESEED_FILE=preseed.cfg
+DEBIAN_VERSION=8.2.0
+PACKAGES=rsync xorriso
 
 apt-get install -y $PACKAGES
 
