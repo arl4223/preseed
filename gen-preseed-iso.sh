@@ -1,28 +1,32 @@
 #!/bin/bash
 
 # Variables
-TEMP_DIR=/tmp
+TEMP_DIR=/tmp/preseed
 LOOP_DIR=loopdir
 INITRD_DIR=initdir
 EXPORT_DIR=exportdir
 PRESEED_URL= 
 PRESEED_FILE=preseed.cfg
 DEBIAN_VERSION=8.2.0
-PACKAGES=rsync xorriso
+PACKAGES='rsync xorriso live-build syslinux squashfs-tools'
 
 apt-get install -y $PACKAGES
 
 # Change into temp dir
+mkdir $TEMP_DIR
+cp $PRESEED_FILE $TEMP_DIR
 cd $TEMP_DIR
 
 # Download Debian ISO
-wget http://cdimage.debian.org/debian-cd/$DEBIAN_VERSION/amd64/iso-cd/debian-$DEBIAN_VERSION-amd64-netinst.iso $TEMP_DIR/netinst.iso
+if [ ! -f $TEMP_DIR/debian-$DEBIAN_VERSION-amd64-netinst.iso ]; then
+    wget http://cdimage.debian.org/debian-cd/$DEBIAN_VERSION/amd64/iso-cd/debian-$DEBIAN_VERSION-amd64-netinst.iso
+fi
 
 # Extract isohdpfx.bin
-dd if=$TEMP_DIR/netinst.iso bs=512 count=1 of=/$TEMP_DIR/isohdpfx.bin
+dd if=$TEMP_DIR/debian-$DEBIAN_VERSION-amd64-netinst.iso bs=512 count=1 of=/$TEMP_DIR/isohdpfx.bin
 
 mkdir $LOOP_DIR
-mount -o loop netinst.iso $LOOP_DIR
+mount -o loop $TEMP_DIR/debian-$DEBIAN_VERSION-amd64-netinst.iso $LOOP_DIR
 mkdir $EXPORT_DIR
 rsync -a -H --exclude=TRANS.TBL $LOOP_DIR/ $EXPORT_DIR
 umount $LOOP_DIR
